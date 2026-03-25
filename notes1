@@ -1,0 +1,98 @@
+Discriminative models → Learn decision boundary → Predict label given input
+Generative models → Learn data distribution → Can generate new data
+
+| Feature          | Discriminative           | Generative      |
+| ---------------- | ------------------------ | --------------- |
+| Learns           | P(y | x)                 | P(x, y) or P(x) |
+| Goal             | Classification           | Data generation |
+| Output           | Label                    | New samples     |
+| Complexity       | Lower                    | Higher          |
+| Data Requirement | Less                     | More            |
+| Examples         | Logistic Regression, SVM | GAN, VAE, GPT   |
+-------------------------------------------------------------------------------------------------------------------------------------------------
+Tokens are the fundamental units of text that an LLM processes; they can be whole words, syllables, or even individual letters 
+(for example, the word "generative" might be split into "gener", "at", "ive").
+
+Embeddings are the numerical vector representations of those tokens that place them in a multi-dimensional space based on their meaning. 
+This conversion enables the model to capture semantic meaning and understand relationships between words, for example, recognizing that 
+"king" is close to "queen".
+-------------------------------------------------------------------------------------------------------------------------------------------------
+GANs are constructed of two neural networks competing together (hence the word Adversarial): a generator and a discriminator.
+
+The generator creates fake data samples while the discriminator evaluates them against the real training data. 
+The two networks are trained simultaneously:
+
+The generator aims to produce images so indistinguishable from the real data that the discriminator cannot tell the difference.
+The discriminator aims to accurately identify whether a given image is real or generated.
+Through this competitive learning, the generator becomes skilled at producing highly realistic data that is similar to the training 
+data.
+-------------------------------------------------------------------------------------------------------------------------------------------------
+What is "Mode Collapse" in GANs, and how do we address it?
+Just like a content creator who finds a certain format of videos results in more reach and interactions, the generative model of a 
+GAN could likely become fixated on a limited diversity of outputs that deceives the discriminator model. This results in the generator 
+producing a small set of outputs, costing the diversity and flexibility of the generated data.
+
+Possible solutions to this could be focusing on training techniques by adjusting the hyperparameters and various optimization 
+algorithms, applying regularizations that promote diversity, or combining multiple generators to cover different modes of generating 
+data.
+-------------------------------------------------------------------------------------------------------------------------------------------------
+A Variational Autoencoder (VAE) is a type of generative model that learns to encode input data into a latent space and decode it back to reconstruct the original input data. 
+VAEs are encoder-decoder models:
+
+The encoder maps the input data to a distribution over the latent space.
+The decoder samples from this latent space distribution reconstruct the input data.
+-------------------------------------------------------------------------------------------------------------------------------------------------
+What makes VAEs different from traditional autoencoders, is that VAE encourages the latent space to follow a known distribution (such as Gaussian). 
+This makes them more useful for generating new data by sampling from this latent space.
+-------------------------------------------------------------------------------------------------------------------------------------------------
+RAG connects a model to external data sources (like your company wiki) to fetch up-to-date facts without retraining the model. 
+The model's parameters stay the same; it just has access to additional data.
+
+Fine-tuning modifies the model's internal weights to change how it speaks, behaves, or reasons, but it is not good for adding new factual knowledge.
+
+Use RAG when you need up-to-date facts (news, private company data) or a specific citation. 
+Use fine-tuning when you need the model to learn a new "behavior," language, or specific output format (e.g., speaking in SQL code).
+-------------------------------------------------------------------------------------------------------------------------------------------------
+How would you evaluate an LLM application? Explain 'LLM-as-a-Judge'.
+Assessing the generated samples is a complex task that depends on the data modality (image, text, video, etc.). Traditional text metrics, such as accuracy, 
+are insufficient for creative tasks because they only check for word overlap, not meaning. 
+LLM benchmarks and leaderboards use standardized tests to measure how well a model handles a given task. They are helpful to compare models and track progress within or 
+across modalities.
+LLM-as-a-Judge is a modern evaluation framework where a highly capable "teacher" model (such as Gemini 3) grades the outputs of a smaller model based on specific criteria, 
+including faithfulness, helpfulness, and tone. This provides a scalable way to approximate human preference without the slowness and cost of manual human review.
+-------------------------------------------------------------------------------------------------------------------------------------------------
+Techniques to improve the stability and convergence of GAN training:
+
+Wasserstein GAN (WGAN): Uses Wasserstein distance as a loss function, improving training stability and providing smoother gradients.
+Two-Timescale Update Rule (TTUR): Using separate learning rates for the generator and the discriminator.
+Label Smoothing: Softens the labels to prevent overconfidence.
+Adaptive learning rates: Using optimizers such as Adam to help manage learning rate dynamically.
+Gradient penalty: Penalizes large gradients in the discriminator to enforce Lipschitz continuity for a more stable training.
+-------------------------------------------------------------------------------------------------------------------------------------------------
+There are several common techniques to control the style of the GenAI outputs:
+
+Prompt engineering: Specify the desired output style by providing detailed prompts highlighting the style or the tone of the content generation. This is an effective and 
+simple method in both text-to-text and text-to-image models. It is a much more effective method if you do it in alignment with the specific requirements or the documentation 
+of the particular model in question.
+Temperature and sampling control: The temperature parameter controls how random the outputs would be. Lower temperatures mean a more conservative and predictable token 
+selection, and higher temperature allows more creative generation. Other parameters, such as top-k and top-p, can also control how creatively the model selects possible 
+next tokens while generating.
+Structured outputs: For structure, modern models utilize "JSON Mode" or "Structured Outputs," which constrain the model to strictly generate valid JSON or XML schemas rather 
+than free text. 
+System prompts: System prompts are sent along with every new message to the model. They can be used to set persistent behavioral instructions that override user inputs to 
+maintain specific personas or rules.
+Style transfer (Images): Another technique that can be used during inference for the models that support is, is to apply the style of one image (reference image) to an 
+input image.
+Fine-tuning: We can use a pretrained model and fine-tune it on a specific dataset containing the style or tone that is desired. This means training the model further on 
+additional data to learn additional specific styles or attributes.
+Reinforcement learning: We can guide the model to prefer certain outputs and steer away from other outputs by providing feedback. This feedback will be used to modify the 
+model through reinforcement learning. Over time, the model will be aligned to the preferences of the users and/or preference datasets. An example of this, in the context of 
+LLMs, is Reinforcement learning from human feedback (RLHF).
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
